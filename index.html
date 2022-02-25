@@ -1,0 +1,118 @@
+<HTML>
+   <head>
+		<title>Cookie Clicker 3</title>
+	
+		<style>
+		.sectionLeft {
+			float: left;
+			width: 80%;
+		}
+		
+		.sectionRight {
+			float: right;
+			width: 20%;
+		}
+		
+		.scoreContainer	{
+			background-color: rgb(246, 191, 188);
+			width: 50%;
+			padding: 10px;
+			border-radius: 10px;
+			font-size: 23px;
+			font-weight: bold;
+		}
+		
+		.clickerContainer img {
+			position: relative;
+			transition: all .2s ease-in-out;
+		}
+		
+		.clickerContainer img:hover { transform: scale(1.10); }
+		.clickerContainer img:active { transform: scale(0.99); }
+		</style>
+   </head>
+   
+   <body>
+	
+	<div class="sectionLeft">
+	<center>
+	<div class="scoreContainer">
+	<span id="score">0</span> Cookie<br>
+	<span id="scorepersecond">0</span> Cookie per second
+	</div>
+	<br>
+	<div class="clickerContainer">
+	<img src="images/clickCookie.png" height="250px" onclick="addToScore(clickingPower)">
+	</div>
+	</center>
+	</div>
+	
+	
+	<div class="sectionRight">
+		<table class="shopButton" onclick="buyCursor()">
+		<tr>
+		<td id="image"><img src="images/cursor.png" height="100px"></td>
+		<td id="nameAndCost">
+			<p>Cursor</p>
+			<p><span id="cursorcost">15</span> cookie</td>
+		</td>
+		<td id="amount"><span id="cursors">0</span></td>
+		</tr>
+		</table>
+	</div>
+	
+	<script>
+	       var score = 0;
+		   var clickingPower = 1;
+		   
+		   var cursorCost = 15;
+		   var cursors = 0;
+		   var grandmaCost = 100;
+		   var grandmas = 0;
+		   
+		   function buyCursor()	{
+				if (score >= cursorCost) {
+					score = score - cursorCost;
+					cursors = cursors + 1;
+					cursorCost = Math.round(cursorCost * 1.15);
+					
+					  document.getElementById("score").innerHTML = score;
+					    document.getElementById("cursorcost").innerHTML = cursorCost;
+						  document.getElementById("cursors").innerHTML = cursors;
+						  updateScorePerSecond();
+				}
+		   }
+		   
+		    function buyGrandma()	{
+				if (score >= grandmaCost) {
+					score = score - grandmaCost;
+					grandmas = grandmas + 1;
+					grandmaCost = Math.round(grandmaCost * 1.15);
+					
+					  document.getElementById("score").innerHTML = score;
+					    document.getElementById("grandmacost").innerHTML = grandmaCost;
+						  document.getElementById("grandmas").innerHTML = grandmas;
+						  updateScorePerSecond();
+				}
+		   }
+		   
+		   function addToScore(amount){
+		   score = score + amount;
+		     document.getElementById("score").innerHTML = score;
+		   }
+		   
+		   function updateScorePerSecond()	{
+				scorePerSecond = cursors + grandmas * 5;
+				document.getElementById("scorepersecond").innerHTML = scorePerSecond;
+		   }
+		   
+		   setInterval(function()	{
+				score = score + cursors;
+				score = score + grandmas * 5;
+				document.getElementById("score").innerHTML = score;
+				
+				document.title = score + " cookie - Cookie Clicker";
+		   }, 1000); // 1000ms = 1 second
+	</script>
+   </body>
+</HTML>
